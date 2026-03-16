@@ -52,6 +52,49 @@ tvscreener-mcp
 claude mcp add tvscreener -- tvscreener-mcp
 ```
 
+### Docker Usage
+
+You can also run the MCP server using Docker, which simplifies hosting and avoids local dependency issues.
+
+#### Building the Image
+```bash
+docker build -t tvscreener .
+```
+
+#### Running with Docker
+To run the MCP server in a container:
+```bash
+docker run -i tvscreener
+```
+*The `-i` flag is important as the MCP server typically communicates via standard input/output.*
+
+#### Running the S/R Scanner (`sr_scanner.py`)
+You can also run the Support/Resistance scanner script within the Docker environment:
+
+```bash
+# Using Docker directly
+docker run --rm tvscreener python sr_scanner.py --top 10
+
+# Using Docker Compose
+docker-compose run --rm sr-scanner python sr_scanner.py --symbols BTC,ETH,SOL
+```
+
+#### Using with Claude Desktop
+If you want to use the Dockerized MCP server with Claude Desktop, you can add it to your `claude_desktop_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "tvscreener": {
+      "command": "docker",
+      "args": ["run", "-i", "--rm", "tvscreener"]
+    }
+  }
+}
+```
+
+---
+
 **MCP Tools:**
 - `discover_fields` - Search 3500+ available fields by keyword
 - `custom_query` - Flexible queries with any fields and filters

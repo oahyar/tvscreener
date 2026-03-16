@@ -11,11 +11,7 @@ from tvscreener import (
     StockField, CryptoField, ForexField, BondField, FuturesField, CoinField,
     FilterOperator
 )
-import pandas as pd
-from typing import TYPE_CHECKING
-
-if TYPE_CHECKING:
-    from typing import Any
+from typing import TYPE_CHECKING, Optional, Union, List, Dict, Any
 
 
 # Mapping from string operators to FilterOperator enum
@@ -136,9 +132,9 @@ def get_field_categories(asset_type: str = "stock") -> dict[str, list[str]]:
 
 def custom_screen(
     asset_type: str = "stock",
-    select_fields: list[str] | None = None,
-    filters: list[dict[str, Any]] | None = None,
-    sort_by: str | None = None,
+    select_fields: Optional[list[str]] = None,
+    filters: Optional[list[dict[str, Any]]] = None,
+    sort_by: Optional[str] = None,
     ascending: bool = False,
     limit: int = 25
 ) -> pd.DataFrame:
@@ -197,11 +193,11 @@ def custom_screen(
 
 
 def screen_stocks(
-    min_price: float | None = None,
-    max_price: float | None = None,
-    min_market_cap: float | None = None,
-    max_market_cap: float | None = None,
-    sectors: list[str] | None = None,
+    min_price: Optional[float] = None,
+    max_price: Optional[float] = None,
+    min_market_cap: Optional[float] = None,
+    max_market_cap: Optional[float] = None,
+    sectors: Optional[list[str]] = None,
     sort_by: str = "market_cap",
     ascending: bool = False,
     limit: int = 25
@@ -259,8 +255,8 @@ def screen_stocks(
 
 
 def screen_crypto(
-    min_volume_24h: float | None = None,
-    min_market_cap: float | None = None,
+    min_volume_24h: Optional[float] = None,
+    min_market_cap: Optional[float] = None,
     sort_by: str = "market_cap",
     ascending: bool = False,
     limit: int = 25
@@ -305,7 +301,7 @@ def screen_crypto(
 
 
 def screen_forex(
-    min_volume: float | None = None,
+    min_volume: Optional[float] = None,
     limit: int = 25
 ) -> pd.DataFrame:
     """

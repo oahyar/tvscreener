@@ -1,5 +1,6 @@
 from enum import Enum
 
+from typing import Union
 from tvscreener.field import Field
 
 
@@ -84,7 +85,7 @@ class FieldCondition:
 
 
 class Filter:
-    def __init__(self, field: Field | ExtraFilter, operation: FilterOperator, values):
+    def __init__(self, field: Union[Field, ExtraFilter], operation: FilterOperator, values):
         self.field = field
         self.operation = operation
         self.values = values if isinstance(values, list) else [values]

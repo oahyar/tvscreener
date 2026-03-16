@@ -1,0 +1,29 @@
+services:
+  tvscreener-mcp:
+    build: .
+    container_name: tvscreener-mcp
+    restart: unless-stopped
+    # If the MCP server is intended to be used over stdio by a local tool
+    # it may still be easier to run without docker-compose for simple use cases, 
+    # but this is provided as a reference.
+    command: ["tvscreener-mcp"]
+
+  # Multi-coin Support/Resistance Scanner
+  sr-scanner:
+    build: .
+    image: tvscreener:latest
+    command: ["python", "sr_scanner.py"]
+    volumes:
+      - .:/app
+
+  # Telegram Bot for Mobile Access
+  telegram-bot:
+    build: .
+    image: tvscreener:latest
+    command: ["python", "telegram_bot.py"]
+    restart: unless-stopped
+    environment:
+      - TELEGRAM_TOKEN=${TELEGRAM_TOKEN}
+      - WHITELIST_USER_ID=${WHITELIST_USER_ID}
+    volumes:
+      - .:/app

@@ -7,6 +7,7 @@ Exposes market screener functionality via the Model Context Protocol.
 from __future__ import annotations
 
 import json
+from typing import Optional
 from mcp.server.fastmcp import FastMCP
 
 from .tools import (
@@ -102,9 +103,9 @@ def list_field_types(asset_type: str = "stock") -> str:
 @mcp.tool()
 def custom_query(
     asset_type: str = "stock",
-    fields: str | None = None,
-    filters: str | None = None,
-    sort_by: str | None = None,
+    fields: Optional[str] = None,
+    filters: Optional[str] = None,
+    sort_by: Optional[str] = None,
     ascending: bool = False,
     limit: int = 25
 ) -> str:
@@ -179,11 +180,11 @@ def custom_query(
 
 @mcp.tool()
 def search_stocks(
-    min_price: float | None = None,
-    max_price: float | None = None,
-    min_market_cap_billions: float | None = None,
-    max_market_cap_billions: float | None = None,
-    sectors: str | None = None,
+    min_price: Optional[float] = None,
+    max_price: Optional[float] = None,
+    min_market_cap_billions: Optional[float] = None,
+    max_market_cap_billions: Optional[float] = None,
+    sectors: Optional[str] = None,
     sort_by: str = "market_cap",
     limit: int = 25
 ) -> str:
@@ -224,8 +225,8 @@ def search_stocks(
 
 @mcp.tool()
 def search_crypto(
-    min_volume_millions: float | None = None,
-    min_market_cap_billions: float | None = None,
+    min_volume_millions: Optional[float] = None,
+    min_market_cap_billions: Optional[float] = None,
     limit: int = 25
 ) -> str:
     """
@@ -256,7 +257,7 @@ def search_crypto(
 
 @mcp.tool()
 def search_forex(
-    min_volume_millions: float | None = None,
+    min_volume_millions: Optional[float] = None,
     limit: int = 25
 ) -> str:
     """

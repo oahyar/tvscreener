@@ -90,12 +90,12 @@ class Screener:
     def search(self, value: str):
         self.add_filter(ExtraFilter.SEARCH, FilterOperator.MATCH, value)
 
-    def _get_filter(self, filter_type: Field | ExtraFilter) -> Filter:
+    def _get_filter(self, filter_type: Union[Field, ExtraFilter]) -> Filter:
         for filter_ in self.filters:
             if filter_.field == filter_type:
                 return filter_
 
-    def remove_filter(self, filter_type: ExtraFilter | Field):
+    def remove_filter(self, filter_type: Union[ExtraFilter, Field]):
         filter_ = self._get_filter(filter_type)
         if filter_:
             self.filters.remove(filter_)
@@ -115,7 +115,7 @@ class Screener:
             filter_.operation = FilterOperator.EQUAL
         self.filters.append(filter_)
 
-    def _validate_field_type(self, field: Field | ExtraFilter):
+    def _validate_field_type(self, field: Union[Field, ExtraFilter]):
         """Validate that the field type matches the screener's expected field type."""
         from tvscreener.field import FieldWithInterval, FieldWithHistory
 
@@ -143,7 +143,7 @@ class Screener:
                 f"Use {self._field_type.__name__} fields with {type(self).__name__}."
             )
 
-    def add_filter(self, filter_type: Field | ExtraFilter, operation: FilterOperator, values: Enum or str):
+    def add_filter(self, filter_type: Union[Field, ExtraFilter], operation: FilterOperator, values: Union[Enum, str]):
         self._validate_field_type(filter_type)
         filter_ = Filter(filter_type, operation, values)
         # Case where the filter already exists, and we want to add more values
